@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if login_id %}已登入使用者{% else %}首頁{% endif %}</title>
+</head>
+<body>
+    {% if login_id %}
+        <span style="color: green;">{{ login_id }} 已登入</span>
+        <a href="/logout">登出</a>
+    {% else %}
+        <form method="POST">
+            <h1>登入</h1>
+            <input name="login_id" type="text" required placeholder="帳號"><br>
+            <input name="password" type="password" required placeholder="密碼"><br>
+            <input name="form_type" type="hidden" value="login">
+
+            {% if login_wrong %}
+            <div style="color: red;">錯誤帳號或密碼</div>
+            {% endif %}
+
+            <input type="submit" value="登入 Login">
+        </form>
+
+        <form method="POST">
+            <h1>註冊</h1>
+            <input name="login_id" type="text" required><br>
+            <input name="password" type="password" required><br>
+            <input name="form_type" type="hidden" value="signup">
+        
+            {% if signup_wrong %}
+            <div style="color: red;">帳號重複</div>
+            {% endif %}
+        
+            <input type="submit" value="註冊">
+        </form>
+    {% endif %}
+</body>
+</html>

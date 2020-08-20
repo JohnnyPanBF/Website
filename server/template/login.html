@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>已登入</title>
+</head>
+<body>
+    <h3>{{ login_id }} 已登入</h3>
+    <a href="/">
+        <button>登出</button>
+    </a>
+
+    <hr>
+
+    <form method="POST">
+        <h4>新問題</h4>
+        <input name="title" type="text" placeholder="問題標題" required><br>
+        <textarea name="content" cols="30" rows="10" placeholder="問題描述" required></textarea><br>
+        <input type="submit" value="發出問題">
+    </form>
+
+    <hr>
+    <div>
+        {% for question in questions %}
+            <!-- question = { "title": "abc", } -->
+            {{ question }}
+            <h3>標題: {{ question.title }}</h3>
+            <div>內容: {{ question.content }}</div>
+            <div>提問者: {{ question.writer }}</div>
+            <div>發文時間: {{ question.create_at.strftime("%b %d, %p %I %m") }}</div>
+            <hr>
+        {% endfor %}
+    </div>
+</body>
+</html>
