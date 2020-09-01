@@ -33,6 +33,7 @@ class Account(Base):
             DB.db_close()
             return True
         else:
+            DB.db_close()
             return False
 
     @classmethod
@@ -58,9 +59,42 @@ class Account(Base):
             return True
 
 
+class Question(Base):
+    __tablename__ = "question"
+
+    id = Column(Integer, primary_key=True)
+    q_user = Column(String)
+    q_title = Column(String)
+    q_content = Column(String)
+    create_at = Column(DateTime, default=datetime.utcnow)
+
+    @classmethod
+    def insert_db(cls, q_user, q_title, q_content):
+
+        acc_insert = [
+            {
+                'q_user': q_user,
+                "q_title": q_title,
+                "q_content": q_content,
+            },
+        ]
+
+        DB.db_connect().execute(Question.__table__.insert(), acc_insert)
+        DB.db_close()
+
+    @classmethod
+    def find(cls):
+        ss = 'select * from question'
+        result = DB.db_connect().execute(ss)
+
+        sql_all = result.fetchall()
+        DB.db_close()
+        return sql_all
+
+
 class DB:
     engine = sqlalchemy.create_engine("sqlite:///johnny.db")
-    Base.metadata.create_all(engine)
+    Base.metadata.create_all(engine)  # 注意table創建的位置 在這一句之下的table 無法跑到這一句代碼 所以這種寫法table寫在上方
     conn = None
 
     @classmethod

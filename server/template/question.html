@@ -7,7 +7,7 @@
 </head>
 <body>
     <h3>{{ login_id }} 已登入</h3>
-    <a href="/">
+    <a href="/logout">
         <button>登出</button>
     </a>
 
@@ -22,13 +22,11 @@
 
     <hr>
     <div>
-        {% for question in questions %}
-            <!-- question = { "title": "abc", } -->
-            {{ question }}
-            <h3>標題: {{ question.title }}</h3>
-            <div>內容: {{ question.content }}</div>
-            <div>提問者: {{ question.writer }}</div>
-            <div>發文時間: {{ question.create_at.strftime("%b %d, %p %I %m") }}</div>
+        {% for i in q_all%}
+            <h3>標題: {{i.q_title}}</h3>
+            <div>內容: {{i.q_content}}</div>
+            <div>提問者:{{i.q_user}}</div>
+            <div>發文時間: {{i.create_at}}</div>
             <hr>
         {% endfor %}
     </div>
